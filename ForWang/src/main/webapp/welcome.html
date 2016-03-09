@@ -1,0 +1,187 @@
+<html>
+<head>
+<#import "/spring.ftl" as spring/>
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+
+<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/jquery.form.js"></script>
+<style type="text/css">  
+html{height:100%}  
+body{height:100%;margin:0px;padding:0px}  
+#allmap{height:100%}  
+</style> 
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=7ShbEVDU0oCZt7YWGfIUeaKk"></script>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>For My Girl</title>
+</head>
+<body>
+<h2>Hello World!</h2>
+<div class="container-fluid">
+	<ul id="rule" class="nav nav-tabs">
+		<li class="active"><a data-toggle="tab" href="#tbid1">Home</a></li>
+		<li><a data-toggle="tab" href="#tbid2">Photo</a></li>
+		<li><a data-toggle="tab" href="#tbid3">Log</a></li>
+		<li><a data-toggle="tab" href="#tbid4">Video</a></li>
+	</ul>
+	
+</div>
+<div class="tab-content" id="tab-cont">
+<div id="tbid1" class="tab-pane active">
+<div class="container-fluid">
+<div class="panel panel-primary">
+<div class="panel panel-body">
+	<div class="row-fluid" >
+		<div class="carousel slide col-xs-6 col-md-offset-3" id="carousel-demo">
+			<ol class="carousel-indicators">
+				<li class="active" data-slide-to="0" data-target="#carousel-demo"></li>
+				<li data-slide-to="1" data-target="#carousel-demo"></li>
+				<li data-slide-to="2" data-target="#carousel-demo"></li>
+				
+			</ol>
+			<div class="carousel-inner">
+				<div class="item active" style="height:800px">
+				<a class="thumbnail loaded nav-pic" >
+					<img alt="" src="${url}" class="image-responsive image-rounded" />
+					<div class="carousel-caption">
+						
+						<h4>?</h4>
+						<p>还挺俊</p>
+					</div>
+				</a>	
+				</div>                                               
+				<div class="item">
+				<a class="thumbnail loaded nav-pic" >
+					<img alt="" src="img/2.jpg" class="image-responsive image-rounded" />
+					<div class="carousel-caption">
+						<h4>？</h4>
+						<p>丑的一比</p>
+					</div>
+				</a>
+				</div>
+				<div class="item">
+				<a class="thumbnail loaded nav-pic" data-toggle="modal" data-target="#myModal">
+					<img alt="" src="img/5.jpg" class="image-responsive image-rounded" />
+					<div class="carousel-caption">
+						<h4>2015/6/13</h4>
+						<p>船上</p>
+					</div>
+				</a>
+				</div>
+				<!-- 模态框 -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title" id="myModalLabel">加点料</h4>
+								
+							</div>
+							<form class="form-horizontal" role="form" id="myForm" action="setImageInfo" method="post">
+							<div class="modal-body">
+								
+									<div class="form-group">
+										<label class="col-sm-2 control-label">Title</label>
+										<div class="col-sm-10">
+											<input class="form-control" name="title" type="text" value="what?"/>
+											
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label">Date</label>
+										<div class="col-sm-10">
+											<input class="form-control" name="stake_time" type="text" value="when?"/>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label">Content</label>
+										<div class="col-sm-10">
+											<input class="form-control" name="content" type="textarea" value="do_what?"/>
+										</div>
+									</div>
+									<div class="form-group">
+										<input type="hidden" class="form-control" value="id" name="sid"/>
+									</div>
+									<div class="form-group">
+										<input type="hidden" class="form-control" value="url" name="url"/>
+									</div>
+									<div class="form-group">
+										<input type="hidden" class="form-control" value="location" name="location"/>
+									</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+								<button type="submit" class="btn btn-primary" id="modal-commit">提交更改</button>
+							</div>
+							</form>
+						</div>
+					</div>
+				
+				</div>
+			</div>
+			<!-- Controls --> 
+			<a class="carousel-control left" href="#carousel-demo" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+			</a> 
+			<a class="carousel-control right" href="#carousel-demo" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right"></span>
+			</a>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+</div>
+<div class="tab-pane" id="tbid2">
+
+	<div id="allmap"></div>
+</div>
+</div>
+<script type="text/javascript"> 
+var map = new BMap.Map("container");          // 创建地图实例  
+var point = new BMap.Point(116.404, 39.915);  // 创建点坐标  
+map.centerAndZoom(point, 15);                 // 初始化地图，设置中心点坐标和地图级别  
+</script>  
+<script>
+	$(document).ready(function(){
+		$('#myForm').ajaxForm(function(){
+			alert("已提交")
+		});
+	})
+	
+	$('.nav-pic').bind('click',function(){
+		var title=$(this).find('img')
+		.attr('src');
+		$.ajax({
+			type:'get',
+			url:'checkImageInfo?url='+title,
+			dataType:'json',
+			complete:function(xmlrequest){
+				
+			},
+			success:function(data){
+				var title=data["title"];
+				var location=data["loation"];
+				var take_time=data["take_time"];
+				var content=data["content"];
+				var id=data["id"];
+				var url=data["url"];
+				$('#myModal').find('#myForm').find('.form-group:nth-child(1)').find('.form-control').attr('value',title);
+				$('#myModal').find('#myForm').find('.form-group:nth-child(2)').find('.form-control').attr('value',take_time);
+				$('#myModal').find('#myForm').find('.form-group:nth-child(3)').find('.form-control').attr('value',content);
+				$('#myModal').find('#myForm').find('.form-group:nth-child(4)').find('.form-control').attr('value',id);
+				$('#myModal').find('#myForm').find('.form-group:nth-child(5)').find('.form-control').attr('value',url);
+				$('#myModal').find('#myForm').find('.form-group:nth-child(6)').find('.form-control').attr('value',location);
+				$('#myModal').modal('show');
+			}
+		})
+		
+	})
+</script>
+</body>
+
+</html>
